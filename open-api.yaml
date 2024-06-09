@@ -1,0 +1,2092 @@
+openapi: 3.0.1
+info:
+  title: Gtfs
+  description: Description
+  version: 0.0.1
+servers:
+  - url: 'http://api.sharry.cc'
+    description: Generated server url
+paths:
+  '/api/v2/tickets/{ticketId}/confirm':
+    post:
+      tags:
+        - Tickets
+      operationId: confirm
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmTicketRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+  '/api/v2/tickets/{ticketId}/cancel':
+    post:
+      tags:
+        - Tickets
+      operationId: cancel
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+  '/api/v2/orders/{orderId}/confirm':
+    post:
+      tags:
+        - Orders
+      operationId: confirmOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmOrderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderResponse'
+  '/api/v2/orders/{orderId}/cancel':
+    post:
+      tags:
+        - Orders
+      operationId: cancelOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+  /api/v2/orders/create:
+    post:
+      tags:
+        - Orders
+      operationId: createOrder
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrderResponse'
+  /api/v1/validation/send-code:
+    post:
+      tags:
+        - Validation
+      operationId: sendCode
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCodeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendCode'
+  /api/v1/validation/confirm-code:
+    post:
+      tags:
+        - Validation
+      operationId: confirm_1
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfirmCodeRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfirmCode'
+  '/api/v1/tickets/{id}/cancel':
+    post:
+      tags:
+        - Tickets
+      operationId: cancelTicket
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelTicketRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CancelTicket'
+      deprecated: true
+  '/api/v2/trips/{tripId}':
+    get:
+      tags:
+        - Trips
+      summary: Get the trip by id
+      operationId: get
+      parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripDetails'
+  '/api/v2/trips/{tripId}/{segmentIndex}/seats':
+    get:
+      tags:
+        - Trips
+      summary: Get information about seats by trip id and segment index
+      operationId: getSeats
+      parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: segmentIndex
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: currency
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - UAH
+              - PLN
+              - CZK
+              - EUR
+              - USD
+        - name: carriageId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentSeats'
+  '/api/v2/trips/{tripId}/seats':
+    get:
+      tags:
+        - Trips
+      summary: Get information about seats by trip id
+      operationId: getSeats_1
+      parameters:
+        - name: tripId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TripSeats'
+      deprecated: true
+  /api/v2/trips/find:
+    get:
+      tags:
+        - Trips
+      summary: Get a list of all trips
+      operationId: getAll
+      parameters:
+        - name: request
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/FindRequest'
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trip'
+  '/api/v2/tickets/{ticketId}':
+    get:
+      tags:
+        - Tickets
+      operationId: get_1
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketDetails'
+  '/api/v2/tickets/{ticketId}/transport-details':
+    get:
+      tags:
+        - Tickets
+      operationId: getTransport
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportInfo'
+  '/api/v2/tickets/{ticketId}/cancellation-details':
+    get:
+      tags:
+        - Tickets
+      operationId: getCancellation
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketCancellationDetails'
+  '/api/v2/orders/{orderId}':
+    get:
+      tags:
+        - Orders
+      operationId: getOrderFile
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+  '/api/v2/orders/{orderId}/cancellation-details':
+    get:
+      tags:
+        - Orders
+      operationId: getCancellation_1
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderCancellationDetails'
+  '/api/v1/trips/{id}':
+    get:
+      tags:
+        - Trips
+      summary: Get the trip by id
+      operationId: get_2
+      parameters:
+        - name: request
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/TravelExtendedRequest'
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TravelExtended'
+      deprecated: true
+  '/api/v1/trips/{id}/free-seats':
+    get:
+      tags:
+        - Trips
+      summary: Get information about free seats by trip id
+      operationId: getFreeSeats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentSeats'
+      deprecated: true
+  /api/v1/trips/find:
+    get:
+      tags:
+        - Trips
+      summary: Get a list of all trips
+      operationId: getAll_1
+      parameters:
+        - name: request
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/FindRequest'
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Travel'
+      deprecated: true
+  /api/v1/trips/find-more-days:
+    get:
+      tags:
+        - Trips
+      summary: Get a list of all trips by day range
+      operationId: getAllByRange
+      parameters:
+        - name: request
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/FindRequest'
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TravelsMoreDays'
+      deprecated: true
+  '/api/v1/tickets/{id}/transport-info':
+    get:
+      tags:
+        - Tickets
+      operationId: getTransport_1
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransportInfo'
+      deprecated: true
+  '/api/v1/tickets/{id}/cancel-info':
+    get:
+      tags:
+        - Tickets
+      operationId: getCancelInfo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketCancellationDetails'
+      deprecated: true
+  '/api/v1/images/{filename}':
+    get:
+      tags:
+        - Images
+      operationId: getImage
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+  '/api/v1/images/transport/{imageId}':
+    get:
+      tags:
+        - Images
+      operationId: getTransportImage
+      parameters:
+        - name: imageId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                format: byte
+components:
+  schemas:
+    ConfirmTicketRequest:
+      required:
+        - confirmation
+        - description
+      type: object
+      properties:
+        description:
+          type: string
+        confirmation:
+          type: string
+    ConfirmOrderRequest:
+      type: object
+    LocalTime:
+      type: object
+      properties:
+        hour:
+          type: integer
+          format: int32
+        minute:
+          type: integer
+          format: int32
+        second:
+          type: integer
+          format: int32
+        nano:
+          type: integer
+          format: int32
+      description: Time
+    OrderResponse:
+      required:
+        - features
+        - id
+        - status
+        - tickets
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the order
+        status:
+          type: string
+          description: Order status
+          enum:
+            - RESERVED
+            - PROCESSING
+            - CONFIRMED
+            - FAILED
+            - CANCELED
+        tickets:
+          type: array
+          description: Tickets
+          items:
+            $ref: '#/components/schemas/OrderResponseTicket'
+        features:
+          type: array
+          description: List of all available features for this order
+          items:
+            type: string
+            description: List of all available features for this order
+            enum:
+              - CANCEL
+    OrderResponseTicket:
+      required:
+        - carrierName
+        - currency
+        - features
+        - firstName
+        - from
+        - id
+        - lastName
+        - price
+        - route
+        - to
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the ticket
+        firstName:
+          type: string
+          description: Passenger's first name
+        lastName:
+          type: string
+          description: Passenger's last name
+        route:
+          type: string
+          description: Route name
+        carrierName:
+          type: string
+          description: Carrier name
+        from:
+          $ref: '#/components/schemas/Point'
+        to:
+          $ref: '#/components/schemas/Point'
+        price:
+          type: number
+          description: Ticket price
+          format: double
+        currency:
+          type: string
+          description: Currency in which the price is specified
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+        link:
+          type: string
+          description: Link to the ticket in PDF format. Could be null
+        seatNumber:
+          type: string
+          description: Passenger's seat number (null in case of free seating
+        features:
+          type: array
+          description: List of all available features for this ticket
+          items:
+            type: string
+            description: List of all available features for this ticket
+            enum:
+              - DETAILS
+              - TRANSPORT_DETAILS
+              - CANCELLATION_DETAILS
+              - CONFIRM
+              - CANCEL
+      description: Tickets
+    Point:
+      required:
+        - city
+        - date
+        - station
+        - time
+      type: object
+      properties:
+        city:
+          type: string
+          description: City
+        station:
+          type: string
+          description: Station
+        date:
+          type: string
+          description: Date
+          format: date
+        time:
+          $ref: '#/components/schemas/LocalTime'
+      description: Arrival
+    CreateOrderRequest:
+      required:
+        - contactInfo
+        - passengers
+        - paymentInfo
+        - segmentCount
+        - tripId
+      type: object
+      properties:
+        tripId:
+          type: string
+          description: Identifier of the selected trip
+        paymentInfo:
+          $ref: '#/components/schemas/CreateOrderRequestPaymentInfo'
+        contactInfo:
+          $ref: '#/components/schemas/CreateOrderRequestContactInfo'
+        passengers:
+          type: array
+          description: Passengers information
+          items:
+            $ref: '#/components/schemas/CreateOrderRequestPassenger'
+        segmentCount:
+          type: integer
+          format: int32
+    CreateOrderRequestContactInfo:
+      type: object
+      properties:
+        phone:
+          type: string
+          description: Passenger's phone number
+        viber:
+          type: string
+          description: Passenger's additional phone number
+        email:
+          type: string
+          description: Passenger's email
+        city:
+          type: string
+          description: Passenger's city. Required if the "needCity" flag is true
+        address:
+          type: string
+          description: Passenger's address. Required if the "needAddress" flag is true
+        zipCode:
+          type: string
+          description: Passenger's zip code. Required if the "needZipCode" flag is true
+      description: Contact information
+    CreateOrderRequestPassenger:
+      required:
+        - firstName
+        - lastName
+        - segmentsInfo
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Passenger's first name
+        lastName:
+          type: string
+          description: Passenger's last name
+        segmentsInfo:
+          type: array
+          description: Passenger's information on each segment
+          items:
+            $ref: '#/components/schemas/CreateOrderRequestPassengerSegmentInfo'
+        middleName:
+          type: string
+          description: >-
+            Passenger's middle name. Required if the "needMiddleName" flag is
+            true
+        birthDate:
+          type: string
+          description: Passenger's birth date. Required if the "needBirthDate" flag is true
+          format: date
+        documentType:
+          type: string
+          description: >-
+            Passenger's document type. Required if the "needDocument" flag is
+            true
+          enum:
+            - FOREIGN_PASSPORT
+            - INTERNAL_PASSPORT
+            - BIRTH_CERTIFICATE
+        documentNumber:
+          type: string
+          description: >-
+            Passenger's document number. Required if the "needDocument" flag is
+            true
+        documentExpirationDate:
+          type: string
+          description: >-
+            Passenger's document expire date. Required if the
+            "needDocumentExpirationDate" flag is true
+          format: date
+        citizenship:
+          type: string
+          description: >-
+            Passenger's citizenship. Required if the "needCitizenship" flag is
+            true
+        gender:
+          type: string
+          description: Passenger's gender. Required if the "needGender" flag is true
+          enum:
+            - MALE
+            - FEMALE
+        prepaymentAmount:
+          type: number
+          description: Prepayment amount. Used for the payment type "PREPAYMENT"
+          format: double
+      description: Passengers information
+    CreateOrderRequestPassengerSegmentInfo:
+      type: object
+      properties:
+        ticketTypeId:
+          type: string
+          description: >-
+            Ticket type id. Selected from the array of "ticketTypes" in the get
+            trip request
+        comment:
+          type: string
+          description: >-
+            Ticket type comment. Required if selected Ticket Type field
+            "comment" is not null
+        seatId:
+          type: string
+          description: >-
+            User-selected seat id. A seatId must be specified for each passenger
+            or for no one. Seats on the train can only be picked from a single
+            carriage
+      description: Passenger's information on each segment
+    CreateOrderRequestPaymentInfo:
+      required:
+        - currency
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: >-
+            Payment type. Selected from the array of "paymentTypes" in the
+            search trips request
+          enum:
+            - ONLINE
+            - TRANSFER
+            - PREPAYMENT
+            - ON_BOARDING
+        currency:
+          type: string
+          description: Currency in which the payment is made
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+      description: Payment information
+    CreateOrderResponse:
+      required:
+        - confirmationTime
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier of the order
+        confirmationTime:
+          type: integer
+          description: Time in which the order must be confirmed (in minutes)
+          format: int32
+        paymentInfo:
+          $ref: '#/components/schemas/CreateOrderResponsePaymentInfo'
+    CreateOrderResponseBill:
+      required:
+        - currency
+        - firstName
+        - lastName
+        - price
+        - route
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Passenger's first name
+        lastName:
+          type: string
+          description: Passenger's last name
+        route:
+          type: string
+          description: Route name
+        price:
+          type: number
+          description: Ticket price
+          format: double
+        currency:
+          type: string
+          description: Currency in which the price is specified
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+      description: Detailed information on ticket price for each passenger (could be empty)
+    CreateOrderResponsePaymentInfo:
+      required:
+        - bills
+        - totalPrice
+      type: object
+      properties:
+        totalPrice:
+          type: number
+          description: Total order price
+          format: double
+        bills:
+          type: array
+          description: >-
+            Detailed information on ticket price for each passenger (could be
+            empty)
+          items:
+            $ref: '#/components/schemas/CreateOrderResponseBill'
+      description: Payment info
+    SendCodeRequest:
+      type: object
+      properties:
+        travelId:
+          type: string
+        phone:
+          type: string
+    SendCode:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    ConfirmCodeRequest:
+      type: object
+      properties:
+        travelId:
+          type: string
+        phone:
+          type: string
+        code:
+          type: string
+    ConfirmCode:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    CancelTicketRequest:
+      type: object
+      properties:
+        id:
+          type: string
+        percentId:
+          type: string
+    CancelTicket:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    SegmentDetails:
+      required:
+        - info
+        - refunds
+        - stops
+        - ticketTypes
+      type: object
+      properties:
+        stops:
+          type: array
+          description: Stops
+          items:
+            $ref: '#/components/schemas/Stop'
+        ticketTypes:
+          type: array
+          description: Ticket types
+          items:
+            $ref: '#/components/schemas/TicketType'
+        refunds:
+          type: array
+          description: Ticket refunds information
+          items:
+            type: string
+            description: Ticket refunds information
+        description:
+          type: string
+          description: Description
+        photos:
+          type: array
+          description: Photos of the bus
+          items:
+            type: string
+            description: Photos of the bus
+        info:
+          $ref: '#/components/schemas/SegmentDetailsInfo'
+        trainDetails:
+          $ref: '#/components/schemas/SegmentDetailsTrainDetails'
+      description: Информация о сегментах
+    SegmentDetailsCarriage:
+      required:
+        - currency
+        - freeSeats
+        - id
+        - number
+        - price
+      type: object
+      properties:
+        id:
+          type: string
+          description: Indetifier of the carriage
+        number:
+          type: string
+          description: Number of the carriage
+        price:
+          type: number
+          description: Price of the trip
+          format: double
+        currency:
+          type: string
+          description: Currency in which the price is specified
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+        freeSeats:
+          type: integer
+          description: Number of available seats
+          format: int32
+      description: List of carriages related to this type
+    SegmentDetailsCarriageType:
+      required:
+        - carriages
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the carriage type
+        carriages:
+          type: array
+          description: List of carriages related to this type
+          items:
+            $ref: '#/components/schemas/SegmentDetailsCarriage'
+      description: Carriage types information
+    SegmentDetailsInfo:
+      type: object
+      properties:
+        route:
+          type: string
+          description: Route name
+        prepaymentNotification:
+          type: string
+          description: Prepayment information
+        luggage:
+          type: string
+          description: Luggage information
+        animalTerms:
+          type: string
+          description: Animal terms
+        carrierTerms:
+          type: string
+          description: Carrier terms
+      description: Segment information
+    SegmentDetailsTrainDetails:
+      required:
+        - carriageTypes
+      type: object
+      properties:
+        carriageTypes:
+          type: array
+          description: Carriage types information
+          items:
+            $ref: '#/components/schemas/SegmentDetailsCarriageType'
+      description: 'Train-related information (transportType=TRAIN), otherwise null'
+    Stop:
+      required:
+        - city
+        - station
+        - type
+      type: object
+      properties:
+        city:
+          type: string
+          description: City
+        station:
+          type: string
+          description: Station
+        date:
+          type: string
+          description: Date
+          format: date
+        time:
+          $ref: '#/components/schemas/LocalTime'
+        type:
+          type: string
+          description: Type
+          enum:
+            - STOP
+            - TRANSFER
+      description: Stops
+    TicketType:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Ticket type identifier
+        description:
+          type: string
+          description: Ticket type description (information to be displayed)
+        discountPercent:
+          type: number
+          description: Discount percentage (may be 0)
+          format: double
+        comment:
+          $ref: '#/components/schemas/TicketTypeComment'
+      description: Ticket types
+    TicketTypeComment:
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of field to enter information
+          enum:
+            - DATE
+            - TEXT
+        description:
+          type: string
+          description: Comment description (information to be displayed)
+      description: >-
+        Ticket type comment (not null when extra information is required to
+        choose this type of ticket)
+    TripDetails:
+      required:
+        - segments
+      type: object
+      properties:
+        segments:
+          type: array
+          description: Информация о сегментах
+          items:
+            $ref: '#/components/schemas/SegmentDetails'
+    Seat:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Seat identifier
+        number:
+          type: string
+          description: Seat number
+        price:
+          type: number
+          description: Seat price (null means that the price is the same as the trip price)
+          format: double
+        currency:
+          type: string
+          description: Seat price currency
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+    SegmentSeats:
+      required:
+        - seats
+        - supported
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Number of free seats
+          format: int32
+        seats:
+          type: array
+          description: >-
+            List of possible seat selection options. Never empty, because the
+            first element of the list always means selecting any seat from the
+            free ones
+          items:
+            $ref: '#/components/schemas/Seat'
+        matrix:
+          $ref: '#/components/schemas/SegmentSeatsMatrix'
+        supported:
+          type: boolean
+          deprecated: true
+    SegmentSeatsMatrix:
+      required:
+        - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/SegmentSeatsMatrixItem'
+      description: 'Seat matrix (including booked seats, entrances and exits)'
+    SegmentSeatsMatrixItem:
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - NONE
+            - EXIT
+            - SERVICE
+            - BOOKED
+            - FREE
+        seat:
+          $ref: '#/components/schemas/Seat'
+        id:
+          type: string
+          deprecated: true
+        number:
+          type: string
+          deprecated: true
+    TripSeats:
+      required:
+        - segments
+      type: object
+      properties:
+        segments:
+          type: array
+          description: Segment information on seats
+          items:
+            $ref: '#/components/schemas/SegmentSeats'
+    FindRequest:
+      type: object
+      properties:
+        transportType:
+          type: string
+          enum:
+            - BUS
+            - CAR
+            - MINIVAN
+            - VAN
+            - TRAIN
+        startLng:
+          type: number
+          format: double
+        startLat:
+          type: number
+          format: double
+        endLng:
+          type: number
+          format: double
+        endLat:
+          type: number
+          format: double
+        isAdmin:
+          type: boolean
+          writeOnly: true
+        currency:
+          type: string
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+        tripDate:
+          type: string
+          format: date
+        travelProvider:
+          type: string
+          enum:
+            - A
+            - D
+            - S
+            - L
+            - I
+            - M
+            - T
+            - B
+            - O
+            - H
+            - Z
+            - G
+        before:
+          type: integer
+          format: int32
+        after:
+          type: integer
+          format: int32
+        admin:
+          type: boolean
+    Segment:
+      required:
+        - carrier
+        - from
+        - info
+        - payment
+        - to
+        - transport
+      type: object
+      properties:
+        route:
+          type: string
+          description: Название маршрута
+        carrier:
+          $ref: '#/components/schemas/SegmentCarrier'
+        from:
+          $ref: '#/components/schemas/Point'
+        to:
+          $ref: '#/components/schemas/Point'
+        payment:
+          $ref: '#/components/schemas/SegmentPayment'
+        transport:
+          $ref: '#/components/schemas/SegmentTransport'
+        info:
+          $ref: '#/components/schemas/SegmentInfo'
+      description: Segments
+    SegmentCarrier:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название перевозчика
+        logo:
+          type: string
+          description: Логотип перевозчика
+        phone:
+          type: string
+          description: Номер перевозчика
+        rating:
+          type: number
+          description: Рейтинг перевозчика
+          format: double
+        type:
+          type: string
+          description: Тип перевозчика
+      description: Информация о перевозчике
+    SegmentInfo:
+      type: object
+      properties:
+        luggage:
+          type: string
+          description: Информация о багаже
+        packageMaxCapacity:
+          type: string
+          description: Максимальный размер багажа
+        amenities:
+          type: array
+          description: Удобства
+          items:
+            type: string
+            description: Удобства
+        animalTerms:
+          type: string
+          description: Условия перевозки с животными
+        additionalTerms:
+          type: string
+          description: Дополнительные условия
+        carrierTerms:
+          type: string
+          description: Условия перевозчика
+        description:
+          type: string
+          description: Описание
+        flexibleBoarding:
+          type: boolean
+          description: Гибкая посадка (возможность посадки в любой точке маршрута)
+        manualConfirmation:
+          type: boolean
+          description: Ручное подтверждение
+      description: Блоки информации
+    SegmentPayment:
+      type: object
+      properties:
+        currency:
+          title: Валюта
+          type: string
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+        discountPrice:
+          title: Цена (со скидкой)
+          type: number
+          description: Используется для отображения актуальной цены
+          format: double
+        originalPrice:
+          title: Цена (полная)
+          type: number
+          description: Используется для отображения старой цены
+          format: double
+        basePrice:
+          title: Цена (для расчета скидки)
+          type: number
+          description: >-
+            Используется для расчета скидки (равна originalPrice или
+            discountPrice в зависимости от перевозчика)
+          format: double
+        prepaymentNotification:
+          title: Информация о предоплате
+          type: string
+      description: Информация об оплате
+    SegmentTransport:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Название транспорта
+        type:
+          type: string
+          description: Тип транспорта
+          enum:
+            - BUS
+            - CAR
+            - MINIVAN
+            - VAN
+            - TRAIN
+      description: Информация о транспорте
+    Transfer:
+      required:
+        - info
+        - type
+      type: object
+      properties:
+        info:
+          type: string
+          description: Информация о пересадке
+        from:
+          $ref: '#/components/schemas/Point'
+        to:
+          $ref: '#/components/schemas/Point'
+        type:
+          type: string
+          description: Тип пересадки
+          enum:
+            - ORGANIZED
+            - UNORGANIZED
+            - UNKNOWN
+        changeStation:
+          type: boolean
+          description: Смена станции (пересадка осуществляется на той же остановке или нет)
+      description: Information about changes. Used for display
+    Trip:
+      required:
+        - id
+        - paymentTypes
+        - segments
+        - transfers
+      type: object
+      properties:
+        id:
+          type: string
+          description: Trip Identifier
+        freeSeats:
+          type: integer
+          description: >-
+            Number of available seats. Could be null (means no information is
+            available, but we suggest that there are seats available on the
+            trip)
+          format: int32
+        paymentTypes:
+          type: array
+          description: Payment Types. The selected value is used in create order request
+          items:
+            type: string
+            description: Payment Types. The selected value is used in create order request
+            enum:
+              - ONLINE
+              - TRANSFER
+              - PREPAYMENT
+              - ON_BOARDING
+        requiredPassengerInfo:
+          $ref: '#/components/schemas/TripRequiredPassengerInfo'
+        segments:
+          type: array
+          description: Segments
+          items:
+            $ref: '#/components/schemas/Segment'
+        transfers:
+          type: array
+          description: Information about changes. Used for display
+          items:
+            $ref: '#/components/schemas/Transfer'
+    TripRequiredPassengerInfo:
+      type: object
+      properties:
+        needMiddleName:
+          type: boolean
+        needBirthDate:
+          type: boolean
+        needDocument:
+          type: boolean
+        needDocumentExpirationDate:
+          type: boolean
+        needCitizenship:
+          type: boolean
+        needGender:
+          type: boolean
+        needOrderData:
+          type: boolean
+        cyrillicNamesAllowed:
+          type: boolean
+          description: Ability to enter passenger names in Cyrillic
+        needCity:
+          type: boolean
+        needAddress:
+          type: boolean
+        needZipCode:
+          type: boolean
+      description: Required passenger data to be filled in
+    TicketDetails:
+      type: object
+      properties:
+        route:
+          type: string
+        luggage:
+          type: string
+        provider:
+          type: string
+        changeInfo:
+          type: string
+        manager:
+          $ref: '#/components/schemas/TicketDetailsManagerItem'
+        cancellation:
+          type: string
+        carrierPhone:
+          type: string
+        additionalTerms:
+          type: string
+        tickets:
+          type: array
+          items:
+            $ref: '#/components/schemas/TicketDetailsTicketsItem'
+    TicketDetailsDiscount:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        comment:
+          type: string
+        percent:
+          type: number
+          format: double
+        description:
+          type: string
+    TicketDetailsManagerItem:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+    TicketDetailsPaymentItem:
+      type: object
+      properties:
+        status:
+          type: string
+        prepayment:
+          type: string
+    TicketDetailsTicketsItem:
+      type: object
+      properties:
+        id:
+          type: string
+        providerId:
+          type: string
+        seat:
+          type: string
+        price:
+          type: number
+          format: double
+        carrier:
+          type: string
+        currency:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        discount:
+          $ref: '#/components/schemas/TicketDetailsDiscount'
+        fromCity:
+          type: string
+        toCity:
+          type: string
+        fromStation:
+          type: string
+        toStation:
+          type: string
+        linkToPdf:
+          type: string
+        payment:
+          $ref: '#/components/schemas/TicketDetailsPaymentItem'
+        departureDate:
+          type: string
+          format: date
+        departureTime:
+          $ref: '#/components/schemas/LocalTime'
+        arrivalDate:
+          type: string
+          format: date
+        arrivalTime:
+          $ref: '#/components/schemas/LocalTime'
+        bookingDate:
+          type: string
+          format: date-time
+    TransportInfo:
+      type: object
+      properties:
+        transportList:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransportInfoTransport'
+    TransportInfoTransport:
+      type: object
+      properties:
+        route:
+          type: string
+        transport:
+          type: string
+        driversInfo:
+          type: string
+        photoLink:
+          type: string
+        gpsLink:
+          type: string
+    TicketCancellationDetails:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/TicketCancellationDetailsRefund'
+    TicketCancellationDetailsRefund:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum:
+            - AFTER_PAYMENT
+            - BEFORE_DEPARTURE
+        refundPercent:
+          type: number
+          format: double
+        withheldAmount:
+          type: string
+        refundAmount:
+          type: string
+        time:
+          type: integer
+          format: int32
+        timeBeforeDeparture:
+          type: integer
+          format: int32
+          deprecated: true
+        name:
+          type: string
+          deprecated: true
+    OrderCancellationDetails:
+      required:
+        - refunds
+        - tickets
+      type: object
+      properties:
+        refunds:
+          type: array
+          description: Order refund conditions
+          items:
+            $ref: '#/components/schemas/OrderCancellationDetailsRefund'
+        tickets:
+          type: array
+          description: Refund conditions for each ticket
+          items:
+            $ref: '#/components/schemas/OrderCancellationDetailsTicketRefunds'
+    OrderCancellationDetailsRefund:
+      required:
+        - type
+      type: object
+      properties:
+        type:
+          type: string
+          description: Refund condition type
+          enum:
+            - AFTER_PAYMENT
+            - BEFORE_DEPARTURE
+        refundPercent:
+          type: number
+          description: Refund percent
+          format: double
+        withheldAmount:
+          type: number
+          description: Amount withheld in case this refund condition is applied
+          format: double
+        refundAmount:
+          type: number
+          description: Refundable amount in case this refund condition is applied
+          format: double
+        time:
+          type: integer
+          description: >-
+            Number of seconds for the validity of this refund condition (depends
+            on type field)
+          format: int32
+      description: Ticket refund conditions
+    OrderCancellationDetailsTicketRefunds:
+      required:
+        - refunds
+        - ticketId
+      type: object
+      properties:
+        ticketId:
+          type: string
+          description: Identifier of the ticket
+        refunds:
+          type: array
+          description: Ticket refund conditions
+          items:
+            $ref: '#/components/schemas/OrderCancellationDetailsRefund'
+      description: Refund conditions for each ticket
+    TravelExtendedRequest:
+      type: object
+      properties:
+        id:
+          type: string
+    ChangeStation:
+      type: object
+      properties:
+        changeHours:
+          type: integer
+          format: int32
+        changeMinutes:
+          type: integer
+          format: int32
+        raceNum:
+          type: integer
+          format: int32
+        raceName:
+          type: string
+        stopsIndex:
+          type: integer
+          format: int32
+    RefundItem:
+      type: object
+      properties:
+        refund:
+          type: array
+          items:
+            type: string
+        routeIndex:
+          type: integer
+          format: int32
+    TravelExtended:
+      type: object
+      properties:
+        stops:
+          type: array
+          items:
+            $ref: '#/components/schemas/Stop'
+        changeStations:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeStation'
+        ticketTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/TicketType'
+        amenities:
+          type: array
+          items:
+            type: string
+        refunds:
+          type: array
+          items:
+            $ref: '#/components/schemas/RefundItem'
+        carrierLuggage:
+          type: string
+        description:
+          type: string
+        extra:
+          type: object
+          additionalProperties:
+            type: object
+        photos:
+          type: array
+          items:
+            type: string
+    RequiredPassengerInfo:
+      required:
+        - needAddress
+        - needBirth
+        - needCitizenShip
+        - needCity
+        - needDoc
+        - needDocExpireDate
+        - needGender
+        - needMiddlename
+        - needOrderData
+        - needZipCode
+      type: object
+      properties:
+        needDoc:
+          type: boolean
+        needBirth:
+          type: boolean
+        needGender:
+          type: boolean
+        needOrderData:
+          type: boolean
+        needMiddlename:
+          type: boolean
+        needCitizenShip:
+          type: boolean
+        needDocExpireDate:
+          type: boolean
+        needCity:
+          type: boolean
+        needAddress:
+          type: boolean
+        needZipCode:
+          type: boolean
+      description: Обязательные данные пассажира
+    Travel:
+      required:
+        - canSale
+        - id
+        - manualConfirmation
+        - requiredPassengerInfo
+      type: object
+      properties:
+        id:
+          type: string
+          description: Идентификатор поездки
+        route:
+          type: string
+          description: Название маршрута
+        carrier:
+          type: string
+          description: Название перевозчика
+        fromStation:
+          type: string
+          description: Станция (откуда)
+        toStation:
+          type: string
+          description: Станция (куда)
+        fromCity:
+          type: string
+          description: Город (откуда)
+        toCity:
+          type: string
+          description: Город (куда)
+        departureDate:
+          type: string
+          description: Дата отправки
+          format: date
+        arrivalDate:
+          type: string
+          description: Дата прибытия
+          format: date
+        departureTime:
+          $ref: '#/components/schemas/LocalTime'
+        arrivalTime:
+          $ref: '#/components/schemas/LocalTime'
+        carrierLogoUrl:
+          type: string
+          description: Логотип перевозчика
+        discountPrice:
+          type: number
+          description: Цена (со скидкой)
+          format: double
+        originalPrice:
+          type: number
+          description: Цена (полная)
+          format: double
+        basePrice:
+          type: number
+          description: Цена (для расчета скидки)
+          format: double
+        prepaymentNotification:
+          type: string
+          description: Информация о предоплате
+        currency:
+          type: string
+          description: Валюта
+          enum:
+            - UAH
+            - PLN
+            - CZK
+            - EUR
+            - USD
+        carrierLuggage:
+          type: string
+          description: Информация о багаже
+        freeSeats:
+          type: integer
+          description: Количество свободных мест
+          format: int32
+        carrierPhone:
+          type: string
+          description: Номер перевозчика
+        additionalTerms:
+          type: string
+          description: Дополнительные условия
+        transport:
+          type: string
+          description: Название транспорта
+        changes:
+          type: array
+          description: Информация о пересадках
+          items:
+            $ref: '#/components/schemas/Transfer'
+        amenities:
+          type: array
+          description: Удобства
+          items:
+            type: string
+            description: Удобства
+        animalTerms:
+          type: string
+          description: Условия перевозки с животными
+        rating:
+          type: number
+          description: Рейтинг перевозчика
+          format: double
+        flexibleBoarding:
+          type: boolean
+          description: Гибкая посадка
+        paymentTypes:
+          type: array
+          description: Способы оплаты
+          items:
+            type: string
+            description: Способы оплаты
+            enum:
+              - ONLINE
+              - TRANSFER
+              - PREPAYMENT
+              - ON_BOARDING
+        transportType:
+          type: string
+          description: Тип транспорта
+          enum:
+            - BUS
+            - CAR
+            - MINIVAN
+            - VAN
+            - TRAIN
+        provisionRate:
+          type: number
+          description: Вознаграждение агента
+          format: double
+        refunds:
+          type: array
+          description: Условия возврата
+          items:
+            $ref: '#/components/schemas/RefundItem'
+        requiredPassengerInfo:
+          $ref: '#/components/schemas/RequiredPassengerInfo'
+        carrierTerms:
+          type: string
+          description: Условия перевозчика
+        carrierType:
+          type: string
+        description:
+          type: string
+        manualConfirmation:
+          type: boolean
+        packageMaxCapacity:
+          type: string
+        cyrillicNamesAllowed:
+          type: boolean
+        dispCarrierPanel:
+          type: string
+        dispCarrierPhone:
+          type: string
+        carrierMarkupPercent:
+          type: number
+          format: double
+        recommended:
+          type: boolean
+        canReservation:
+          type: boolean
+          deprecated: true
+        canSale:
+          type: boolean
+          deprecated: true
+        fullPrice:
+          type: number
+          format: double
+          deprecated: true
+        price:
+          type: number
+          format: double
+          deprecated: true
+        changeInfo:
+          type: string
+          deprecated: true
+    TravelsMoreDays:
+      type: object
+      properties:
+        currentTravels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Travel'
+        possibleTravels:
+          type: array
+          items:
+            $ref: '#/components/schemas/TravelsWithPossibleDate'
+    TravelsWithPossibleDate:
+      type: object
+      properties:
+        travels:
+          type: array
+          items:
+            $ref: '#/components/schemas/Travel'
+        date:
+          type: string
+          format: date
